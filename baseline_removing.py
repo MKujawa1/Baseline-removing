@@ -91,14 +91,20 @@ while True:
                              wave_amp[1],freq[1],dc[1],phase[1]]))
     ### Baseline based on previous fit
     bl_rem = wave(x,*fit[-8:])
-    ### Removing baseline and displaying plots
+    ### Baseline removing
+    bl = bl_rem+(np.mean(data_bl[:5])-np.mean(bl_rem[:5]))
+    rem = data_bl-(bl_rem+(np.mean(data_bl[:5])-np.mean(bl_rem[:5])))
+    ### Calulating mse
+    mse = np.mean((data-rem)**2)
+    ### Plot displaying
     plt.clf()
+    plt.suptitle('BASELINE REMOVING')
     plt.subplot(1,2,1)
     plt.plot(data_bl,label = 'data with baseline')
-    plt.plot((bl_rem+(np.mean(data_bl[:5])-np.mean(bl_rem[:5]))),label = 'fit baseline')
+    plt.plot(bl,label = 'fit baseline')
     plt.legend()
     plt.subplot(1,2,2)
     plt.plot(data,label = 'real data')
-    plt.plot(data_bl-(bl_rem+(np.mean(data_bl[:5])-np.mean(bl_rem[:5]))),label = 'data after \nbaseline removing')
+    plt.plot(rem,label = 'data after \nbaseline removing \nMSE: '+ str(np.round(mse,2)))
     plt.legend()
     plt.pause(pause)
