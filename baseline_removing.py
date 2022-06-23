@@ -108,3 +108,4 @@ while True:
     plt.plot(rem,label = 'data after \nbaseline removing \nMSE: '+ str(np.round(mse,2)))
     plt.legend()
     plt.pause(pause)
+plt.show()
